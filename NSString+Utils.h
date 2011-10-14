@@ -11,5 +11,6 @@
 @interface NSString (Utils)
 
 + (NSUInteger)numberOfWordsInString:(NSString *)str;
++ (NSString *)generateUUID;
 
 @end
