@@ -3,7 +3,7 @@
 //  Notes
 //
 //  Created by Ben Stovold on 14/10/2011.
-//  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
+//  Copyright 2011 Ben Stovold and Gavin Conway. All rights reserved.
 //
 
 #import "NSDate+Utils.h"
