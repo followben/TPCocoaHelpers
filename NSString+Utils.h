@@ -10,7 +10,10 @@
 
 @interface NSString (Utils)
 
-+ (NSUInteger)numberOfWordsInString:(NSString *)str;
-+ (NSString *)generateUUID;
++ (NSString *)stringFromCFUUID;
+
+- (NSUInteger)countWords;
+- (NSString *)stringByDeletingCharactersFromStringToFit:(CGRect)rect withInset:(CGFloat)inset usingFont:(UIFont *)font;
+- (NSString *)stringByDeletingWordsFromStringToFit:(CGRect)rect withInset:(CGFloat)inset usingFont:(UIFont *)font;
 
 @end
