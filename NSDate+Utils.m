@@ -10,14 +10,28 @@
 
 @implementation NSDate (Utils)
 
-- (NSString *)dateStringWithStyle:(NSDateFormatterStyle)style
+- (NSDateFormatter *)staticDateFormatter
 {
     static NSDateFormatter *dateFormatter = nil;
     if (!dateFormatter){
         dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setLocale:[NSLocale currentLocale]];
     }
+    return dateFormatter;
+}
+
+- (NSString *)dateStringWithStyle:(NSDateFormatterStyle)style
+{
+    NSDateFormatter *dateFormatter = [self staticDateFormatter];
+    [dateFormatter setDateFormat:nil];
     [dateFormatter setDateStyle:style];
+    return [dateFormatter stringFromDate:self];
+}
+
+- (NSString *)dateStringWithFormat:(NSString *)format
+{
+    NSDateFormatter *dateFormatter = [self staticDateFormatter];
+    [dateFormatter setDateFormat:format];
     return [dateFormatter stringFromDate:self];
 }
 

@@ -11,5 +11,6 @@
 @interface NSDate (Utils)
 
 - (NSString *)dateStringWithStyle:(NSDateFormatterStyle)style;
+- (NSString *)dateStringWithFormat:(NSString *)format;
 
 @end
