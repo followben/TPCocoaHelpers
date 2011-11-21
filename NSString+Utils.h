@@ -15,5 +15,6 @@
 - (NSUInteger)countWords;
 - (NSString *)stringByDeletingCharactersFromStringToFit:(CGRect)rect withInset:(CGFloat)inset usingFont:(UIFont *)font;
 - (NSString *)stringByDeletingWordsFromStringToFit:(CGRect)rect withInset:(CGFloat)inset usingFont:(UIFont *)font;
+- (NSString *)stringByInsertingNewLineBeforeWordExceedingIndex:(NSUInteger)index;
 
 @end

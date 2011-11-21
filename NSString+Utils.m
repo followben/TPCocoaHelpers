@@ -75,4 +75,20 @@
     return [self stringByDeletingFromStringToFit:rect withInset:inset usingFont:font byWords:YES];
 }
 
+- (NSString *)stringByInsertingNewLineBeforeWordExceedingIndex:(NSUInteger)index
+{
+    NSMutableString *string = [NSMutableString stringWithString:self];
+    
+    // Remove the last space in the first line (if there is one)
+    NSString *firstLineText = [string substringToIndex:index];
+    NSRange rangeOfLastSpaceInFirstLine = [firstLineText rangeOfCharacterFromSet:[NSCharacterSet whitespaceCharacterSet] options:NSBackwardsSearch];
+    
+    if (rangeOfLastSpaceInFirstLine.location == NSNotFound) {
+        [string insertString:@"\n" atIndex:index];
+    } else {
+        [string replaceOccurrencesOfString:@" " withString:@"\n" options:NSBackwardsSearch range:rangeOfLastSpaceInFirstLine];
+    }
+    return string;
+}
+
 @end
