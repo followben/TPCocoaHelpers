@@ -16,9 +16,11 @@
 + (NSString *)stringFromCFUUID
 {
     CFUUIDRef theUUID = CFUUIDCreate(NULL);
-    CFStringRef string = CFUUIDCreateString(NULL, theUUID);
+    CFStringRef uuidString = CFUUIDCreateString(NULL, theUUID);
     CFRelease(theUUID);
-    return (__bridge NSString *)string;
+    NSString *uuid = [[NSString alloc] initWithString:(__bridge NSString *)uuidString];
+    CFRelease(uuidString);
+    return uuid;
 }
 
 
@@ -41,9 +43,14 @@
     CGSize size = [result sizeWithFont:font
                      constrainedToSize:maxSize
                          lineBreakMode:UILineBreakModeWordWrap];
-    NSRange range;
     
-    if (rect.size.height < size.height)
+    unichar ellipsis = 0x2026;
+    NSString *resultToCompare = nil;
+    
+    if (rect.size.height < size.height) {
+        
+        NSRange range = { .location = 0, .length = 0 };
+        
         while (rect.size.height < size.height) {
             
             range = [result rangeOfString:@" " options:NSBackwardsSearch];
@@ -54,17 +61,17 @@
                 result = [result substringToIndex:result.length - 1];
             }
             
-            size = [result sizeWithFont:font
-                      constrainedToSize:maxSize
-                          lineBreakMode:UILineBreakModeWordWrap];
+            resultToCompare = [result stringByAppendingFormat:@"%C", ellipsis];
+            size = [resultToCompare sizeWithFont:font
+                               constrainedToSize:maxSize
+                                   lineBreakMode:UILineBreakModeWordWrap];
         }
-    
-    if (range.location == NSNotFound) result = [result substringToIndex:result.length - 2];
-    result = [result stringByAppendingFormat:@"%C", 0x2026];
+        
+        result = [result stringByAppendingFormat:@"%C", ellipsis];
+    }
     
     return result;
 }
-
 - (NSString *)stringByDeletingCharactersFromStringToFit:(CGRect)rect withInset:(CGFloat)inset usingFont:(UIFont *)font
 {
     return [self stringByDeletingFromStringToFit:rect withInset:inset usingFont:font byWords:NO];
